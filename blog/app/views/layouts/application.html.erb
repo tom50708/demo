@@ -6,9 +6,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width,initail-scale=1">
   </head>
 
   <body>
+  <div class="container-fluid">
+    <%= render "common/navbar" %>
+	<p style="color: green"><%= flash[:notice] %></p>
+	<p style="color: red"><%= flash[:alert] %></p>
     <%= yield %>
+  </div>
+  <%= render "common/footer" %>
   </body>
 </html>
