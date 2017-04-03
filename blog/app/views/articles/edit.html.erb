@@ -1,0 +1,8 @@
+<h1>Edit Article</h1>
+<%= form_for @article do |f| %>
+	<%= f.label :title, "Title" %>
+	<%= f.text_field :title, :class => ' form-control' %>
+	<%= f.label :content, "Content" %>
+	<%= f.text_area :content, :class => ' form-control' %>
+	<%= f.submit "Edit", :class => 'btn btn-primary'%>
+<% end %>

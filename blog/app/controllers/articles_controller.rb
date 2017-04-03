@@ -1,9 +1,10 @@
 class ArticlesController < ApplicationController
+	before_action :set_article, :only => [:show, :edit, :update, :destroy]
 	def index
-		@articles = Article.all
+		@articles = Article.page(params[:page]).per(2)
 	end
 	def show
-		
+		@comments = @article.comments
 	end
 	def new
 		@article  = Article.new
@@ -11,7 +12,7 @@ class ArticlesController < ApplicationController
 	def create
 		@article = Article.create(article_params)
 		if @article.save
-			redirect_to articles_path
+			redirect_to articles_path, notice: "Create successfully"
 		else
 			render :new
 		end
@@ -19,11 +20,21 @@ class ArticlesController < ApplicationController
 	def edit
 	end
 	def update
+		if @article.update(article_params)
+			redirect_to articles_path, notice: "Edit successfully"
+		else
+			render :edit
+		end
 	end
 	def destroy
+		@article.destroy
+		redirect_to articles_path, notice: "Delete succesfully"
 	end
 	private
+	def set_article
+		@article = Article.find(params[:id])
+	end
 	def article_params
-		params.require(:article).permit(:title,:content)
+		params.require(:article).permit(:title, :content)
 	end
 end

@@ -1,0 +1,18 @@
+<%= link_to 'Edit', edit_article_path(@article), :class => 'btn btn-primary' %>
+<%= link_to 'delete',article_path(@article), :class => 'btn btn-primary', method: :delete,  data: {confirm: "Are you sure?"} %>
+<h1><%= content_tag :span, @article.title %></h1>
+<%= content_tag :span, simple_format(@article.content) %>
+<h1>Comments</h1>
+<table>
+	<% @comments.each do |comment| %>
+	<tr>
+		<td><%= comment.content %></td>
+		<td>
+			<%= link_to 'Edit', edit_article_comment_path(comment.article, comment), :class => 'btn btn-sm btn-default'%>
+			<%= link_to 'Delete', article_comment_path(comment.article, comment), :class => 'btn btn-sm btn-default', method: :delete, data: {confirm: "Are you sure?"}%>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<%= link_to 'New Comment', new_article_comment_path(@article), :class => 'btn btn-warning pull-right' %>
+
