@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 	before_action :find_article 
 	def new
-		@comment = @article.comments.new
+		#@comment = @article.comments.new
 	end
 	def create
 		@comment = @article.comments.build(comment_params)
@@ -16,7 +16,8 @@ class CommentsController < ApplicationController
 	end
 	def update
 		@comment = @article.comments.find(params[:id])
-		if @comment.update(comment_params)
+		if @comme
+			 t.update(comment_params)
 			redirect_to article_path(@article), notice: "Edit comment successfully"
 		else
 			render :edit

@@ -2,11 +2,13 @@
 <%= link_to 'delete',article_path(@article), :class => 'btn btn-primary', method: :delete,  data: {confirm: "Are you sure?"} %>
 <h1><%= content_tag :span, @article.title %></h1>
 <%= content_tag :span, simple_format(@article.content) %>
-<h1>Comments</h1>
-<table>
+<h3>Comments</h3>
+<%= link_to 'New Comment', new_article_comment_path(@article), :class => 'btn btn-warning pull-right' %>
+<table class="table talbe-striped">
 	<% @comments.each do |comment| %>
 	<tr>
 		<td><%= comment.content %></td>
+		<td><%= content_tag :span, time_ago_in_words(comment.created_at) %></td>
 		<td>
 			<%= link_to 'Edit', edit_article_comment_path(comment.article, comment), :class => 'btn btn-sm btn-default'%>
 			<%= link_to 'Delete', article_comment_path(comment.article, comment), :class => 'btn btn-sm btn-default', method: :delete, data: {confirm: "Are you sure?"}%>
@@ -14,5 +16,10 @@
 	</tr>
 	<% end %>
 </table>
-<%= link_to 'New Comment', new_article_comment_path(@article), :class => 'btn btn-warning pull-right' %>
+<%= form_for [@article,Comment.new] do |f| %>
+	<%= f.label :content, "Content" %>
+	<%= f.text_area :content, :class => ' form-control' %>
+	<%= f.submit "Create", :class => 'btn btn-primary'%>
+<% end %>
+
 
