@@ -11,8 +11,11 @@
 			<td>#</td>
 			<td><%= link_to article.title, article_path(article)%></td>
 			<td><%= content_tag :span, time_ago_in_words(article.created_at) %></td>
-			<td><%= link_to 'Edit', edit_article_path(article), :class => 'btn btn-sm btn-default' %>
+			<td>
+				<% if article.editable_by?(current_user) %>
+			    <%= link_to 'Edit', edit_article_path(article), :class => 'btn btn-sm btn-default' %>
 				<%= link_to 'Delete', article_path(article), method: :delete, :class => 'btn btn-sm btn-default', data: {confirm: "Are you sure?"} %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

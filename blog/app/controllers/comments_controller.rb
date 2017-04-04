@@ -1,10 +1,9 @@
 class CommentsController < ApplicationController
+	before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy] 
 	before_action :find_article 
-	def new
-		#@comment = @article.comments.new
-	end
 	def create
 		@comment = @article.comments.build(comment_params)
+		@comment.author = current_user
 		if @comment.save
 			redirect_to article_path(@article), notice:"Create comment successfully"
 		else
@@ -12,19 +11,18 @@ class CommentsController < ApplicationController
 		end
 	end
 	def edit
-		@comment = @article.comments.find(params[:id])
+		@comment = current_user.comments.find(params[:id])
 	end
 	def update
-		@comment = @article.comments.find(params[:id])
-		if @comme
-			 t.update(comment_params)
+		@comment = current_user.comments.find(params[:id])
+		if @comment.update(comment_params)
 			redirect_to article_path(@article), notice: "Edit comment successfully"
 		else
 			render :edit
 		end
 	end
 	def destroy
-		@comment = @article.comments.find(params[:id])	
+		@comment = current_user.comments.find(params[:id])	
 		@comment.destroy
 		redirect_to article_path(@article), alert: "Delete comment successfully"
 	end
